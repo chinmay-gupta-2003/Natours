@@ -2,7 +2,7 @@ const { promisify } = require('util');
 const User = require('../models/userModel');
 const JWT = require('jsonwebtoken');
 const appError = require('../utils/appError');
-const sendEmail = require('../utils/email');
+const Email = require('../utils/email');
 const crypto = require('crypto');
 
 const generateToken = (id) =>
@@ -45,6 +45,10 @@ exports.signUp = async (req, res, next) => {
     });
 
     newUser.password = undefined;
+
+    const url = `${req.protocol}://${req.get('host')}/me`;
+
+    await new Email(newUser, url).sendWelcome();
 
     res.status(201).json({
       status: 'success',
@@ -165,18 +169,12 @@ exports.forgetPassword = async (req, res, next) => {
     const resetToken = user.createPasswordResetToken();
     await user.save({ validateBeforeSave: false });
 
-    const resetURL = `${req.protocol}//${req.get(
-      'host'
-    )}/api/v1/users/resetPassword/${resetToken}`;
-
-    const message = `Dear valued customer, we have received a request to reset the password for your account. If you did not initiate this request, ignore this mail. \nTo reset your password, please click on the following link ${resetURL} . This link will be active for 10 minutes.`;
-
     try {
-      await sendEmail({
-        email: user.email,
-        subject: 'Your password reset token is valid for 10 mins',
-        message,
-      });
+      const resetURL = `${req.protocol}//${req.get(
+        'host'
+      )}/api/v1/users/resetPassword/${resetToken}`;
+
+      await new Email(user, resetURL).sendPasswordReset();
 
       res.status(200).json({
         status: 'success',
