@@ -1415,9 +1415,9 @@ body {
   border-radius: 50%;
   background-image: linear-gradient(
     -225deg,
-    #ff7402 0%,
-    #ffe700 50%,
-    #fff55e 100%
+    #12b886 0%,
+    #40c057 50%,
+    #d3f9d8 100%
   );
 
   filter: blur(20px);
