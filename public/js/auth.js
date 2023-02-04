@@ -1,7 +1,9 @@
 import { showAlert } from './alert.js';
+import { viewLoader, hideLoader } from './loader.js';
 
-export async function signup(name, email, password, confirmPassword) {
+export async function signup(name, email, password, confirmPassword, loader) {
   try {
+    viewLoader(loader);
     const res = await axios({
       method: 'POST',
       url: 'http://localhost:3000/api/v1/users/signup',
@@ -17,10 +19,12 @@ export async function signup(name, email, password, confirmPassword) {
       showAlert('success', 'Signed up successfully');
       window.setTimeout(() => {
         location.assign('/login');
-      }, 1000);
+      }, 1500);
     }
   } catch (error) {
     showAlert('error', error.response.data.message);
+  } finally {
+    hideLoader(loader);
   }
 }
 

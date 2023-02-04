@@ -8,6 +8,7 @@ const signupForm = document.querySelector('.signup-form');
 const mapCont = document.getElementById('map');
 const userDataForm = document.querySelector('.form-user-data');
 const userPasswordForm = document.querySelector('.form-user-settings');
+const loader = document.querySelector('.loader-container');
 
 if (signupForm) {
   signupForm.addEventListener('submit', (e) => {
@@ -18,7 +19,7 @@ if (signupForm) {
     const password = signupForm.querySelector('#password').value;
     const confirmPassword = signupForm.querySelector('#confirm-password').value;
 
-    signup(name, email, password, confirmPassword);
+    signup(name, email, password, confirmPassword, loader);
   });
 }
 
