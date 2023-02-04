@@ -1,5 +1,6 @@
 import { signup, login, logout } from './auth.js';
 import { displayMap } from './leaflet.js';
+import { hideLoader, viewLoader } from './loader.js';
 import { bookTour } from './stripe.js';
 import { updateSettings } from './updateUserData.js';
 
@@ -87,3 +88,7 @@ if (btnBookTour) {
     await bookTour(tourId);
   });
 }
+
+window.addEventListener('load', () => {
+  hideLoader(loader);
+});
