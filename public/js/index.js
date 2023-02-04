@@ -1,5 +1,6 @@
 import { signup, login, logout } from './auth.js';
 import { displayMap } from './leaflet.js';
+import { bookTour } from './stripe.js';
 import { updateSettings } from './updateUserData.js';
 
 const loginForm = document.querySelector('.login-form');
@@ -9,6 +10,7 @@ const mapCont = document.getElementById('map');
 const userDataForm = document.querySelector('.form-user-data');
 const userPasswordForm = document.querySelector('.form-user-settings');
 const loader = document.querySelector('.loader-container');
+const btnBookTour = document.querySelector('.btn--book-tour');
 
 if (signupForm) {
   signupForm.addEventListener('submit', (e) => {
@@ -74,5 +76,14 @@ if (userPasswordForm) {
     );
 
     submitBtn.innerHTML = 'Save password';
+  });
+}
+
+if (btnBookTour) {
+  btnBookTour.addEventListener('click', async (e) => {
+    const { tourId } = e.target.dataset;
+
+    e.target.textContent = 'Processing...';
+    await bookTour(tourId);
   });
 }
