@@ -1,6 +1,13 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const Booking = require('../models/bookingModel');
 const Tour = require('../models/tourModel');
+const {
+  createOne,
+  getOne,
+  getAll,
+  deleteOne,
+  updateOne,
+} = require('../controllers/handlerFactory');
 
 exports.getCheckoutSession = async (req, res, next) => {
   try {
@@ -62,3 +69,9 @@ exports.createBookingCheckout = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.getBooking = getOne(Booking);
+exports.getAllBookings = getAll(Booking);
+exports.createBooking = createOne(Booking);
+exports.updateBooking = updateOne(Booking);
+exports.deleteBooking = deleteOne(Booking);

@@ -6,6 +6,7 @@ const {
   getLoginPage,
   getSignupPage,
   getMe,
+  getMyTours,
 } = require('../controllers/viewController');
 
 const { isLoggedIn, protect } = require('../controllers/authController');
@@ -19,5 +20,6 @@ router.route('/login').get(isLoggedIn, getLoginPage);
 router.route('/signup').get(isLoggedIn, getSignupPage);
 
 router.route('/me').get(protect, getMe);
+router.route('/my-bookings').get(protect, getMyTours);
 
 module.exports = router;
