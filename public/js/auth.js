@@ -6,7 +6,7 @@ export async function signup(name, email, password, confirmPassword, loader) {
     viewLoader(loader);
     const res = await axios({
       method: 'POST',
-      url: 'http://localhost:3000/api/v1/users/signup',
+      url: '/api/v1/users/signup',
       data: {
         name,
         email,
@@ -32,7 +32,7 @@ export async function login(email, password) {
   try {
     const res = await axios({
       method: 'POST',
-      url: 'http://localhost:3000/api/v1/users/login',
+      url: '/api/v1/users/login',
       data: {
         email,
         password,
@@ -54,7 +54,7 @@ export async function logout() {
   try {
     const res = await axios({
       method: 'GET',
-      url: 'http://localhost:3000/api/v1/users/logout',
+      url: '/api/v1/users/logout',
     });
 
     if (res.data.status === 'success') {

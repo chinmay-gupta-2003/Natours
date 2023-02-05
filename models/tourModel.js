@@ -136,7 +136,6 @@ tourSchema.pre('save', function (next) {
 
 tourSchema.pre(/^find/, function (next) {
   this.find({ secretTour: false });
-  this.start = new Date();
 
   next();
 });
@@ -146,12 +145,6 @@ tourSchema.pre(/^find/, function (next) {
     path: 'guides',
     select: '-__v -passwordChangedAt',
   });
-
-  next();
-});
-
-tourSchema.post(/^find/, function (docs, next) {
-  console.log(`${new Date() - this.start} milliseconds`);
 
   next();
 });

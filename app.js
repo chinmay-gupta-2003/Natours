@@ -8,6 +8,7 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 // const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const compression = require('compression');
 
 const appError = require('./utils/appError');
 const { errorHandler } = require('./controllers/errorController');
@@ -57,6 +58,8 @@ app.use(
     ],
   })
 );
+
+app.use(compression());
 
 app.use((req, res, next) => {
   req.requestedTime = new Date().toISOString();
