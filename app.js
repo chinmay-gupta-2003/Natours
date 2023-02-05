@@ -6,7 +6,7 @@ const rateLimit = require('express-rate-limit');
 const sanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
-// const cors = require('cors');
+const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
 
@@ -30,7 +30,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // app.use(helmet());
-// app.use(cors());
+app.use(cors());
 
 if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
 
