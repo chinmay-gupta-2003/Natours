@@ -3,5 +3,3 @@ dev-data/
 overview.html
 tour.html
 *.env
-package-lock.json
-.prettierrc 
