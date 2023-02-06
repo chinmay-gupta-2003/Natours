@@ -7,11 +7,14 @@ const {
   getSignupPage,
   getMe,
   getMyTours,
+  alerts,
 } = require('../controllers/viewController');
 
 const { isLoggedIn, protect } = require('../controllers/authController');
 
 const router = express.Router();
+
+router.use(alerts);
 
 router.route('/').get(isLoggedIn, getOverview);
 router.route('/tour/:slug').get(isLoggedIn, getTour);

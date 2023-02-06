@@ -1,3 +1,4 @@
+import { showAlert } from './alert.js';
 import { signup, login, logout } from './auth.js';
 import { displayMap } from './leaflet.js';
 import { hideLoader, viewLoader } from './loader.js';
@@ -88,6 +89,9 @@ if (btnBookTour) {
     await bookTour(tourId);
   });
 }
+
+const alertMessage = document.querySelector('body').dataset.alert;
+if (alertMessage) showAlert('success', alertMessage);
 
 window.addEventListener('load', () => {
   hideLoader(loader);

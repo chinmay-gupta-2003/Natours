@@ -77,3 +77,11 @@ exports.getMyTours = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.alerts = (req, res, next) => {
+  const { alert } = req.query;
+  if (alert === 'booking')
+    res.locals.alert = 'Booking successful! Reload the page!';
+
+  next();
+};

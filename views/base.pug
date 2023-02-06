@@ -12,7 +12,7 @@ html(lang=en)
       script(defer, type='module', src="/js/index.js") 
       title Natours | #{title}
 
-  body 
+  body(data-alert=`${ alert ? alert : ''}`)
     // LOADER
     include ./includes/_loader
 
