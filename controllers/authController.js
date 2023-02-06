@@ -10,7 +10,7 @@ const generateToken = (id) =>
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
 
-const createSendToken = (res, statusCode, user) => {
+const createSendToken = (req, res, statusCode, user) => {
   const token = generateToken(user._id);
 
   const cookieOptions = {
@@ -18,9 +18,8 @@ const createSendToken = (res, statusCode, user) => {
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
     ),
     httpOnly: true,
+    secure: req.secure,
   };
-
-  if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
 
   res.cookie('jwt', token, cookieOptions);
 
@@ -72,7 +71,7 @@ exports.logIn = async (req, res, next) => {
     if (!user || !(await user.checkPassword(password, user.password)))
       return next(new appError('Incorrect email or password', 401));
 
-    createSendToken(res, 200, user);
+    createSendToken(req, res, 200, user);
   } catch (error) {
     next(error);
   }
@@ -221,7 +220,7 @@ exports.resetPassword = async (req, res, next) => {
 
     await user.save();
 
-    createSendToken(res, 200, user);
+    createSendToken(req, res, 200, user);
   } catch (error) {
     next(error);
   }
@@ -243,7 +242,7 @@ exports.updatePassword = async (req, res, next) => {
     user.confirmPassword = confirmPassword;
     await user.save();
 
-    createSendToken(res, 200, user);
+    createSendToken(req, res, 200, user);
   } catch (error) {
     next(error);
   }
